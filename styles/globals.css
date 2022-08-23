@@ -1,26 +1,92 @@
-html,
+html {
+  height: 100vh;
+}
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  height: 100vh;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+#__next {
+  height: 100%;
 }
 
-* {
-  box-sizing: border-box;
+#main-container {
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.pieces-container {
+  background-color: lightcyan;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  width: 500px;
+  gap: 15px;
+}
+
+.parent {
+  margin: 50px;
+  display: flex;
+  gap: 3px;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 306px;
+  height: 306px;
+  background-color: lightslategray;
+}
+
+.p2 * {
+  background-color: rgb(255, 122, 215);
+}
+
+.p1 * {
+  background-color: lightpink;
+}
+
+.row {
+  display: flex;
+  gap: 3px;
+  justify-content: space-between;
+}
+
+.tile {
+  background-color: white;
+  width: 100px;
+  height: 100px;
+}
+
+.piece {
+  /* background-color: lightpink; */
+  border-radius: 50px;
+}
+
+.s1 {
+  height: 30px;
+  width: 30px;
+}
+
+.s2 {
+  height: 35px;
+  width: 35px;
+}
+
+.s3 {
+  height: 40px;
+  width: 40px;
+}
+
+.s4 {
+  height: 45px;
+  width: 45px;
+}
+
+.s5 {
+  height: 50px;
+  width: 50px;
 }
