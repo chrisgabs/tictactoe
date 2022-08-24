@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { stringify } from 'querystring';
 import styles from '../styles/Tictactoe.module.sass'
 
 let dragged : any = null;
@@ -27,14 +28,25 @@ const drop = (e: any) => {
 }
 
 const TicTacToe: NextPage = () => {
+
+    const createPieces = (player:number) => {
+        let pieces: any = []
+        for (let i = 0, size = 30; i < 5; i++, size+=5) {
+            let p = <div 
+                id={"p" + player +"s" + i} 
+                className={"piece p" + player} 
+                draggable="true" 
+                style={{ width: size + "px", height: size + "px" }}
+                onDrag={drag}> </div>
+            pieces.push(p)
+        }
+        return pieces;
+    }
+
     return (
         <div id="main-container">
             <div className="pieces-container" onDrop={drop} onDragOver={dragOver}>
-                <div id="PIECE1" className="piece s1 p1" draggable="true" onDrag={drag}></div>
-                <div className="piece s2 p1"></div>
-                <div className="piece s3 p1"></div>
-                <div className="piece s4 p1"></div>
-                <div className="piece s5 p1"></div>
+                {createPieces(1)}
             </div>
 
             <div className="parent">
@@ -56,11 +68,7 @@ const TicTacToe: NextPage = () => {
             </div>
 
             <div className="pieces-container">
-                <div className="piece s1 p2"></div>
-                <div className="piece s2 p2"></div>
-                <div className="piece s3 p2"></div>
-                <div className="piece s4 p2"></div>
-                <div className="piece s5 p2"></div>
+                {createPieces(2)}
             </div>
         </div>
     )
