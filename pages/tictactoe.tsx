@@ -8,20 +8,14 @@ const drag = (e: any) => {
     e.dataTransfer.setData("text", e.target.id)
     e.dataTransfer.setData("hatdog", e.target.id)
     dragged = e.target
-    // console.log(e.target);
-    // console.log("dragged")
 }
 
 const dragOver = (e: any) => {
     e.preventDefault()
-    // console.log(e);
 }
 
 const drop = (e: any) => {
     console.log(e)
-
-    // e.preventDeafult()
-    // let data = e.dataTransfer.getData("text")
     dragged.parentNode.removeChild(dragged);
     e.target.appendChild(dragged)
     console.log("dropped")
@@ -43,6 +37,25 @@ const TicTacToe: NextPage = () => {
         return pieces;
     }
 
+    const createTiles = () => {
+        let rows: any = []
+        let tileNum = 0
+        for (let i = 0; i < 3; i++) {
+            let tiles = []
+            for (let i = 0; i < 3; i++, tileNum++) {
+                let tile = <div 
+                className="tile" 
+                id={"t" + tileNum} 
+                onDragOver={dragOver} 
+                onDrop={drop}></div>
+                tiles.push(tile)
+            }
+            let row: any = <div className="row">{tiles}</div>
+            rows.push(row)
+        }
+        return rows;
+    }
+
     return (
         <div id="main-container">
             <div className="pieces-container" onDrop={drop} onDragOver={dragOver}>
@@ -50,24 +63,10 @@ const TicTacToe: NextPage = () => {
             </div>
 
             <div className="parent">
-                <div className="row">
-                    <div className="tile" id="t1" onDragOver={dragOver} onDrop={drop}></div>
-                    <div className="tile" id="t2"></div>
-                    <div className="tile" id="t3"></div>
-                </div>
-                <div className="row">
-                    <div className="tile" id="t4"></div>
-                    <div className="tile" id="t5"></div>
-                    <div className="tile" id="t6"></div>
-                </div>
-                <div className="row">
-                    <div className="tile" id="t7"></div>
-                    <div className="tile" id="t8"></div>
-                    <div className="tile" id="t9"></div>
-                </div>
+                {createTiles()}
             </div>
 
-            <div className="pieces-container">
+            <div className="pieces-container" onDrop={drop} onDragOver={dragOver}>
                 {createPieces(2)}
             </div>
         </div>
