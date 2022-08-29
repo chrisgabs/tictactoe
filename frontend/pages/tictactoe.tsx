@@ -3,20 +3,48 @@ import { stringify } from 'querystring';
 import React from 'react';
 import styles from '../styles/Tictactoe.module.sass'
 import { useEffect, useState, } from "react";
+import io from 'socket.io-client'
+
+const socket = io("http://localhost:3001", {
+    withCredentials: true,
+    extraHeaders: {
+        "my-custom-header": "abcd"
+    }
+});
 
 const TicTacToe: NextPage = () => {
+    const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
+    const [lastPong, setLastPong] = useState<any>(null);
     const [dragged, setDragged] = useState<any>(null);
     const [playerNum, setPlayerNum] = useState<number>(1);
     const [playerTurn, setPlayerTurn] = useState<number>(1);
 
     useEffect(() => {
-        
-    }, [])
+        socket.on('connect', () => {
+            setIsConnected(true);
+        });
+
+        socket.on('disconnect', () => {
+            setIsConnected(false);
+        });
+
+        socket.on('pong', () => {
+            setLastPong(new Date().toISOString());
+        });
+
+        return () => {
+            socket.off('connect');
+            socket.off('disconnect');
+            socket.off('pong');
+        };
+    }, []);
 
     const onDragStart = (e: any) => {
         // e.dataTransfer.setData("text", e.target.id)
         // e.dataTransfer.setData("hatdog", e.target.id)
         setDragged(e.target)
+        socket.emit("ping", "hello")
+        console.log(socket);
     }
 
     const dragOver = (e: any) => {
@@ -47,6 +75,8 @@ const TicTacToe: NextPage = () => {
             dragged.setAttribute("draggable", "return false")
             dragged.setAttribute("onDragStart", "return false")
         }
+        socket.emit("ping", "sheesh");
+        console.log("dropped");
     }
 
     const createPieces = (player: number) => {
